@@ -1,0 +1,18 @@
+{
+	"name": "obj-loader",
+	"version": "1.0.0",
+	"main": "build/main.js",
+	"type": "module",
+	"scripts": {
+		"start": "node build/main.js",
+		"build": "tsc --build --verbose",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "",
+	"description": "",
+	"devDependencies": {
+		"typescript": "^5.0.0",
+		"@types/node": "^22.0.0"
+	}
+}
