@@ -1,4 +1,7 @@
-import fs from "node:fs/promises"
+import fs from "node:fs/promises";
+
+// The file extension for output files
+const fextension = "ucm";
 
 // Make sure the user provided an file path
 if (process.argv.length < 3) {
@@ -80,14 +83,19 @@ if (process.argv.length < 3) {
 			}
 		}
 
-		// Save the data to two files, one for vertex data and one for indices
+		// Add the size of the index buffer to the start of the index array so it appears at the beginning of the file
+		indices.unshift(indices.length);
+
+		// Combine the arrays and push them to a file
 		const vertex_array = new Float32Array(vertex_data);
 		const index_array = new Uint16Array(indices);
 
-		console.log(`Writing ${filename}.vertex`);
-		await fs.writeFile(`./${filename}.vertex`, vertex_array);
-		console.log(`Writing ${filename}.index`);
-		await fs.writeFile(`./${filename}.index`, index_array);
+		const file_buffer = new Uint8Array(vertex_array.byteLength + index_array.byteLength);
+		file_buffer.set(new Uint8Array(index_array.buffer));
+		file_buffer.set(new Uint8Array(vertex_array.buffer), index_array.byteLength);
+
+		console.log(`Writing ${filename}.${fextension}`);
+		await fs.writeFile(`./${filename}.${fextension}`, file_buffer);
 
 		console.log(`Process complete.`);
 
