@@ -8,4 +8,4 @@ Run **node install** to install dependencies then **npm run build** to build the
 
 **npm start "/path/to/file.obj" output_file_name**
 
-The script will produce two files - one named **output_file_name.vertex** containing vertex data and one named **output_file_name.index** containing triangle indices.
+The script will produce **output_file_name.ucm** containing all the vertex and index data for a ucm mesh.

@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 // The file extension for output files
 const fextension = "ucm";
 
-// Make sure the user provided an file path
+// Make sure the user provided a file path
 if (process.argv.length < 3) {
 	console.error("No file path specified.");
 } else if (process.argv.length < 4) {
