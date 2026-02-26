@@ -84,7 +84,8 @@ if (process.argv.length < 3) {
 		}
 
 		// Add mesh data to a header array so that it appears at the start of the file
-		const header = [indices.length];
+		const header = [indices.length, vertex_data.length / 3];
+		header.unshift((header.length + 1) * 4);
 
 		// Combine the arrays and push them to a file
 		const header_array = new Uint32Array(header);
