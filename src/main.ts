@@ -83,16 +83,18 @@ if (process.argv.length < 3) {
 			}
 		}
 
-		// Add the size of the index buffer to the start of the index array so it appears at the beginning of the file
-		indices.unshift(indices.length);
+		// Add mesh data to a header array so that it appears at the start of the file
+		const header = [indices.length];
 
 		// Combine the arrays and push them to a file
+		const header_array = new Uint32Array(header);
 		const vertex_array = new Float32Array(vertex_data);
 		const index_array = new Uint16Array(indices);
 
-		const file_buffer = new Uint8Array(vertex_array.byteLength + index_array.byteLength);
-		file_buffer.set(new Uint8Array(index_array.buffer));
-		file_buffer.set(new Uint8Array(vertex_array.buffer), index_array.byteLength);
+		const file_buffer = new Uint8Array(header_array.byteLength + vertex_array.byteLength + index_array.byteLength);
+		file_buffer.set(new Uint8Array(header_array.buffer));
+		file_buffer.set(new Uint8Array(index_array.buffer), header_array.byteLength);
+		file_buffer.set(new Uint8Array(vertex_array.buffer), header_array.byteLength + index_array.byteLength);
 
 		console.log(`Writing ${filename}.${fextension}`);
 		await fs.writeFile(`./${filename}.${fextension}`, file_buffer);
